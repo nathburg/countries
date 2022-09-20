@@ -1,7 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import { getCountries } from './services/client';
 
 function App() {
+  const countries = getCountries();
+  console.log(countries);
   return (
     <div className="App">
       <header className="App-header">
