@@ -3,14 +3,21 @@ import { getCountries } from '../services/client';
 
 export function useCountries() {
   const [countries, setCountries] = useState([]);
+  const [error, setError] = useState('');
+  const [filterContinent, setFilterContinent] = useState('all');
+
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getCountries();
-      setCountries(data);
+      try {
+        const data = await getCountries();
+        setCountries(data);
+      } catch (e) {
+        setError(e.message);
+      }  
     }
     fetchData();
   }, []);
 
-  return countries;
+  return { countries, error, filterContinent, setFilterContinent } ;
 }

@@ -2,8 +2,11 @@ import React from 'react';
 import { useCountries } from '../../hooks/useCountries';
 import Country from '../Country/Country';
 
-export default function Main({ filterContinent, setFilterContinent }) {
-  const countries = useCountries().filter((country) => {
+export default function Main() {
+  
+  const { countries, error, filterContinent, setFilterContinent } = useCountries();
+  
+  const countryDisplay = countries.filter((country) => {
     if (filterContinent === 'all') {
       return true;
     } else if (filterContinent === 'none') {
@@ -14,6 +17,7 @@ export default function Main({ filterContinent, setFilterContinent }) {
   });
   return (
     <div>
+      <div>{error}</div>
       <select onChange={(e) => setFilterContinent(e.target.value)}>
         <option value='all'>All</option>
         <option value='none'>None</option>
@@ -26,7 +30,7 @@ export default function Main({ filterContinent, setFilterContinent }) {
         <option value='South America'>South America</option>
 
       </select>
-      {countries.map((country) => (
+      {countryDisplay.map((country) => (
         <Country key={country.id} {...country} />
 
       ))}  
